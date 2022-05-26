@@ -40,4 +40,10 @@ public class ServiceURLImpl implements ServiceURL {
         urlRespository.save(url);
         return url;
     }
+
+    @Override
+    public void delete(String id) {
+        ShorterURL loadUrl = this.load(id);
+        urlRespository.delete(loadUrl);
+    }
 }

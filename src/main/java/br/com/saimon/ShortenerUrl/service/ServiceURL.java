@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface ServiceURL {
     List<ShorterURL> getAllUrl();
+
     ShorterURL load(String id);
 
     ShorterURL save(ShorterURLDto shorterURL);
+
+    void delete(String id);
 }
