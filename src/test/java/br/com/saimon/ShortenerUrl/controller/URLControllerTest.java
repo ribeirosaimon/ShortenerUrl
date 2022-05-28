@@ -25,17 +25,17 @@ import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ControllerURL.class)
-@DisplayName("User Controller Test")
+@DisplayName("Controller Test")
 @AutoConfigureMockMvc
 class ControllerURLTest {
+
+    ShorterURL shorterURL = Util.newUrl();
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private ServiceURL serviceURL;
-
-    ShorterURL shorterURL = Util.newUrl();
 
     @BeforeEach
     void setUp() throws Exception {

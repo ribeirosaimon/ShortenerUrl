@@ -2,7 +2,7 @@ package br.com.saimon.ShortenerUrl.service.impl;
 
 import br.com.saimon.ShortenerUrl.DTO.ShorterURLDto;
 import br.com.saimon.ShortenerUrl.domain.ShorterURL;
-import br.com.saimon.ShortenerUrl.repository.URLRespository;
+import br.com.saimon.ShortenerUrl.repository.RepositoryURL;
 import br.com.saimon.ShortenerUrl.service.ServiceURL;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +11,20 @@ import java.util.List;
 
 @Service
 public class ServiceURLImpl implements ServiceURL {
-    private final URLRespository urlRespository;
+    private final RepositoryURL repositoryUrl;
 
-    public ServiceURLImpl(URLRespository urlRespository) {
-        this.urlRespository = urlRespository;
+    public ServiceURLImpl(RepositoryURL repositoryUrl) {
+        this.repositoryUrl = repositoryUrl;
     }
 
     @Override
     public ShorterURL load(String id) {
-        return urlRespository.findById(id).orElseThrow(RuntimeException::new);
+        return repositoryUrl.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
     public List<ShorterURL> getAllUrl() {
-        return urlRespository.findAll();
+        return repositoryUrl.findAll();
     }
 
     @Override
@@ -37,13 +37,13 @@ public class ServiceURLImpl implements ServiceURL {
         url.setHash("hash");
         url.setUserId("userId");
 
-        urlRespository.save(url);
+        repositoryUrl.save(url);
         return url;
     }
 
     @Override
     public void delete(String id) {
         ShorterURL loadUrl = this.load(id);
-        urlRespository.delete(loadUrl);
+        repositoryUrl.delete(loadUrl);
     }
 }
