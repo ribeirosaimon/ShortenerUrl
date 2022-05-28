@@ -3,24 +3,27 @@ package br.com.saimon.ShortenerUrl.controller;
 import br.com.saimon.ShortenerUrl.DTO.ShorterURLDto;
 import br.com.saimon.ShortenerUrl.domain.ShorterURL;
 import br.com.saimon.ShortenerUrl.service.ServiceURL;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Date;
 
 @RestController
 @RequestMapping
-public class URLController {
+public class ControllerURL {
 
     private final ServiceURL serviceURL;
 
-    public URLController(ServiceURL serviceURL) {
+    public ControllerURL(ServiceURL serviceURL) {
         this.serviceURL = serviceURL;
     }
 
     @GetMapping("/urls")
     public ResponseEntity loadAll() {
+
         return ResponseEntity.ok(serviceURL.getAllUrl());
     }
 
@@ -41,7 +44,7 @@ public class URLController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity update(@PathVariable String id){
+    public ResponseEntity delete(@PathVariable String id){
         serviceURL.delete(id);
         return ResponseEntity.accepted().build();
     }

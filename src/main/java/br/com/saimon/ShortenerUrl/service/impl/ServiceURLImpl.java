@@ -24,7 +24,7 @@ public class ServiceURLImpl implements ServiceURL {
 
     @Override
     public List<ShorterURL> getAllUrl() {
-        return null;
+        return urlRespository.findAll();
     }
 
     @Override

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.Objects;
 
 
 @Document
@@ -73,5 +74,18 @@ public class ShorterURL {
 
     public void setExpired(boolean expired) {
         this.expired = expired;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ShorterURL)) return false;
+        ShorterURL that = (ShorterURL) o;
+        return isExpired() == that.isExpired() && Objects.equals(getId(), that.getId()) && Objects.equals(getUrl(), that.getUrl()) && Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getHash(), that.getHash()) && Objects.equals(getCreatedAt(), that.getCreatedAt());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUrl(), getUserId(), getHash(), getCreatedAt(), isExpired());
     }
 }
