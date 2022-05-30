@@ -3,6 +3,7 @@ package br.com.saimon.ShortenerUrl.controller;
 import br.com.saimon.ShortenerUrl.DTO.ShorterURLDto;
 import br.com.saimon.ShortenerUrl.domain.ShorterURL;
 import br.com.saimon.ShortenerUrl.service.ServiceURL;
+import br.com.saimon.ShortenerUrl.util.ServiceHash;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,13 @@ public class ControllerURL {
         this.serviceURL = serviceURL;
     }
 
+    @GetMapping("teste")
+    public String teste(){
+        ServiceHash teste = new ServiceHash();
+        return teste.getHash();
+    }
     @GetMapping("/urls")
     public ResponseEntity loadAll() {
-
         return ResponseEntity.ok(serviceURL.getAllUrl());
     }
 
