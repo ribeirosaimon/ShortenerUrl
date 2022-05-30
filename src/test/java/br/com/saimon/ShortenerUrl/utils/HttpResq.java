@@ -10,27 +10,28 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 public class HttpResq {
-    public static final String URL = "http://localhost:8080/";
 
-    public static MockHttpServletRequestBuilder httpGetAll() {
-        String baseUrl = URL.concat("urls");
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(baseUrl)
-                .accept(MediaType.APPLICATION_JSON);
-        return request;
-    }
 
-    public static MockHttpServletRequestBuilder load(String path, String id) {
-        String url = URL.concat(path).concat(id);
+    public static MockHttpServletRequestBuilder httpGetAll(String url) {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(url)
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
         return request;
     }
 
-    public static RequestBuilder save(ShorterURL shorterURL) throws JsonProcessingException {
+    public static MockHttpServletRequestBuilder load(String url, String id) {
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(url.concat(id))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+        return request;
+    }
+
+    public static RequestBuilder save(String url, ShorterURL shorterURL) throws JsonProcessingException {
         String json = new ObjectMapper().writeValueAsString(shorterURL);
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(URL)
+                .post(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
@@ -39,10 +40,19 @@ public class HttpResq {
         return request;
     }
 
-    public static RequestBuilder delete(String id) {
+    public static RequestBuilder delete(String url, String id) {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .delete(URL.concat(id))
+                .delete(url.concat(id))
                 .with(SecurityMockMvcRequestPostProcessors.csrf());
+
+        return request;
+    }
+
+    public static RequestBuilder getHash(String url, String hash) {
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(url.concat(hash))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
 
         return request;
     }

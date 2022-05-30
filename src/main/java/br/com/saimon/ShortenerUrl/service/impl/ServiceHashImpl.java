@@ -1,12 +1,16 @@
-package br.com.saimon.ShortenerUrl.util;
+package br.com.saimon.ShortenerUrl.service.impl;
+
+import br.com.saimon.ShortenerUrl.service.ServiceHash;
+import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
-public class ServiceHash {
+@Service
+public class ServiceHashImpl implements ServiceHash {
 
-    private static final Integer NUMBER_CHAR = 6;
+    private static final Integer NUMBER_CHAR = 5;
 
-    public String getHash() {
+    public String createHash() {
         StringBuffer HASH = new StringBuffer();
         Random random = new Random();
         for (int i = 0; i <= NUMBER_CHAR; i++) {

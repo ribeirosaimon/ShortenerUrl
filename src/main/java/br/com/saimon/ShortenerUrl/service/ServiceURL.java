@@ -12,5 +12,9 @@ public interface ServiceURL {
 
     ShorterURL save(ShorterURLDto shorterURL);
 
+    ShorterURL getUrlByHash(String hash);
+
     void delete(String id);
+
+
 }

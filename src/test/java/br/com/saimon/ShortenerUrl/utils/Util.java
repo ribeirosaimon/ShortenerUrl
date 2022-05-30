@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Util {
     public static String URL = "http://teste.com.br";
-    public static String HASH = String.valueOf(URL.hashCode());
+    public static String HASH = "HashTest";
     public static String ID = new ObjectId().toString();
 
     public static ShorterURL newUrl() {
