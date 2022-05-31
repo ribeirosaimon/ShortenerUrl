@@ -18,14 +18,17 @@ import java.util.Optional;
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
 @DisplayName("Repository Test")
-class RepositoryURLTest {
+class URLRepositoryTest {
 
     ShorterURL shorterURL = Util.newUrl();
-    
+
     private final String collectionNameTest = "testCollection";
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private URLRepository URLRepository;
 
     @BeforeEach
     public void setUp() {
@@ -68,6 +71,4 @@ class RepositoryURLTest {
         Assertions.assertTrue(countCollection == 0);
         Assertions.assertTrue(mongoTemplate.collectionExists(collectionNameTest));
     }
-
-
 }

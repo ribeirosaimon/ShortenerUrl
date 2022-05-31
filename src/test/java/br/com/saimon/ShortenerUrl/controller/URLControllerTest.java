@@ -2,7 +2,7 @@ package br.com.saimon.ShortenerUrl.controller;
 
 import br.com.saimon.ShortenerUrl.DTO.ShorterURLDto;
 import br.com.saimon.ShortenerUrl.domain.ShorterURL;
-import br.com.saimon.ShortenerUrl.service.ServiceURL;
+import br.com.saimon.ShortenerUrl.service.URLService;
 import br.com.saimon.ShortenerUrl.utils.HttpResq;
 import br.com.saimon.ShortenerUrl.utils.Util;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +24,10 @@ import java.util.List;
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest({ControllerURL.class, ControllerHash.class})
+@WebMvcTest({URLController.class, HashController.class})
 @DisplayName("Controller Test")
 @AutoConfigureMockMvc
-class ControllerURLTest {
+class URLControllerTest {
     public static final String URL = "http://localhost:8080/";
     public static final String HASH_URL = "hash/";
     public static final String SHORTER_URL = "url/";
@@ -38,15 +38,15 @@ class ControllerURLTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ServiceURL serviceURL;
+    private URLService URLService;
 
     @BeforeEach
     void setUp() throws Exception {
-        BDDMockito.given(serviceURL.getAllUrl()).willReturn(List.of(this.shorterURL));
-        BDDMockito.given(serviceURL.load(ArgumentMatchers.anyString())).willReturn(this.shorterURL);
-        BDDMockito.given(serviceURL.save(ArgumentMatchers.any(ShorterURLDto.class))).willReturn(Util.newUrl());
-        BDDMockito.given(serviceURL.getUrlByHash(ArgumentMatchers.anyString())).willReturn(this.shorterURL);
-        BDDMockito.doNothing().when(serviceURL).delete(ArgumentMatchers.anyString());
+        BDDMockito.given(URLService.getAllUrl()).willReturn(List.of(this.shorterURL));
+        BDDMockito.given(URLService.load(ArgumentMatchers.anyString())).willReturn(this.shorterURL);
+        BDDMockito.given(URLService.save(ArgumentMatchers.any(ShorterURLDto.class))).willReturn(Util.newUrl());
+        BDDMockito.given(URLService.getUrlByHash(ArgumentMatchers.anyString())).willReturn(this.shorterURL);
+        BDDMockito.doNothing().when(URLService).delete(ArgumentMatchers.anyString());
     }
 
     @Test

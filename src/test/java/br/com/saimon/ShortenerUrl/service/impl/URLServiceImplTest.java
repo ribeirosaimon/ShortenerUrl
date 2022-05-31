@@ -2,10 +2,9 @@ package br.com.saimon.ShortenerUrl.service.impl;
 
 import br.com.saimon.ShortenerUrl.DTO.ShorterURLDto;
 import br.com.saimon.ShortenerUrl.domain.ShorterURL;
-import br.com.saimon.ShortenerUrl.service.ServiceURL;
+import br.com.saimon.ShortenerUrl.service.URLService;
 import br.com.saimon.ShortenerUrl.utils.Util;
 import org.assertj.core.api.Assertions;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,25 +18,25 @@ import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @DisplayName("Service Test")
-class ServiceURLImplTest {
+class URLServiceImplTest {
 
     ShorterURL shorterURL = Util.newUrl();
 
     @MockBean
-    private ServiceURL serviceURL;
+    private URLService URLService;
 
     @BeforeEach
     public void setUp() {
-        BDDMockito.when(serviceURL.getAllUrl()).thenReturn(List.of(shorterURL));
-        BDDMockito.when(serviceURL.load(ArgumentMatchers.anyString())).thenReturn(shorterURL);
-        BDDMockito.when(serviceURL.save(ArgumentMatchers.any(ShorterURLDto.class))).thenReturn(shorterURL);
-        BDDMockito.doNothing().when(serviceURL).delete(ArgumentMatchers.anyString());
+        BDDMockito.when(URLService.getAllUrl()).thenReturn(List.of(shorterURL));
+        BDDMockito.when(URLService.load(ArgumentMatchers.anyString())).thenReturn(shorterURL);
+        BDDMockito.when(URLService.save(ArgumentMatchers.any(ShorterURLDto.class))).thenReturn(shorterURL);
+        BDDMockito.doNothing().when(URLService).delete(ArgumentMatchers.anyString());
     }
 
     @Test
     @DisplayName("load URL in Service")
     void load() {
-        ShorterURL load = serviceURL.load(shorterURL.getId());
+        ShorterURL load = URLService.load(shorterURL.getId());
         Assertions.assertThat(load.getId().equals(shorterURL.getId())).isTrue();
         Assertions.assertThat(!load.getId().equals("any String")).isTrue();
     }
@@ -45,7 +44,7 @@ class ServiceURLImplTest {
     @Test
     @DisplayName("get All URL in Service")
     void getAllUrl() {
-        List<ShorterURL> allUrl = serviceURL.getAllUrl();
+        List<ShorterURL> allUrl = URLService.getAllUrl();
         Assertions.assertThat(!allUrl.isEmpty()).isTrue();
         Assertions.assertThat(allUrl.stream().count() == 1).isTrue();
     }
@@ -53,7 +52,7 @@ class ServiceURLImplTest {
     @Test
     @DisplayName("save URL in Service")
     void save() {
-        ShorterURL saveUrl = serviceURL.save(Util.newUrlDto());
+        ShorterURL saveUrl = URLService.save(Util.newUrlDto());
         Assertions.assertThat(saveUrl.getId().equals(shorterURL.getId())).isTrue();
         Assertions.assertThat(Util.newUrlDto().getUrl().equals(shorterURL.getUrl())).isTrue();
     }
@@ -61,7 +60,7 @@ class ServiceURLImplTest {
     @Test
     @DisplayName("delete URL in Service")
     void delete() {
-        serviceURL.delete(shorterURL.getId());
-        Assertions.assertThatCode(() -> serviceURL.delete(shorterURL.getId())).doesNotThrowAnyException();
+        URLService.delete(shorterURL.getId());
+        Assertions.assertThatCode(() -> URLService.delete(shorterURL.getId())).doesNotThrowAnyException();
     }
 }

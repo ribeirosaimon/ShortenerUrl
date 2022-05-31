@@ -1,12 +1,12 @@
 package br.com.saimon.ShortenerUrl.service.impl;
 
-import br.com.saimon.ShortenerUrl.service.ServiceHash;
+import br.com.saimon.ShortenerUrl.service.HashService;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
-public class ServiceHashImpl implements ServiceHash {
+public class HashServiceImpl implements HashService {
 
     private static final Integer NUMBER_CHAR = 5;
 
