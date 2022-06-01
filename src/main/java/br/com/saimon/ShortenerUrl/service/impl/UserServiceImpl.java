@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +24,17 @@ import java.util.*;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(ValidationException::new);
+
+        Long loginCount = user.getLoginCount();
+        user.setLastLogin(new Date());
+        user.setLoginCount(loginCount++);
+        userRepository.save(user);
+
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.name()));
@@ -36,14 +44,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User saveUser(NewUserDto user) {
-
+        String encriptedPassword = passwordEncoder.encode(user.getPassword());
         User newUser = User.builder()
                 .name(user.getName())
                 .username(user.getUsername())
-                .password(user.getPassword())
+                .password(encriptedPassword)
                 .roles(Arrays.asList(User.ROLE.USER))
                 .createdAt(new Date())
                 .lastLogin(null)
+                .loginCount(0L)
                 .build();
         log.info("Saving new User to the Database");
         return userRepository.save(newUser);
