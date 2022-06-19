@@ -12,27 +12,28 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-
 @ExtendWith(SpringExtension.class)
-@WebMvcTest({URLController.class, HashController.class})
+@WebMvcTest(controllers = {URLController.class, HashController.class})
 @DisplayName("Controller Test")
-@AutoConfigureMockMvc
 class URLControllerTest {
     public static final String URL = "http://localhost:8080/";
     public static final String HASH_URL = "hash/";
     public static final String SHORTER_URL = "url/";
 
     ShorterURL shorterURL = Util.newUrl();
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private MockMvc mockMvc;

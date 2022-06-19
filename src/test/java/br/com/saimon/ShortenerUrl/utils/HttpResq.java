@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 public class HttpResq {
 
-
     public static MockHttpServletRequestBuilder httpGetAll(String url) {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(url)
