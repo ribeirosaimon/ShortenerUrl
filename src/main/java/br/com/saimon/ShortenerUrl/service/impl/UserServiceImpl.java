@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User addRole(String id) {
         User user = userRepository.findById(id).orElseThrow(ValidationException::new);
         user.getRoles().add(User.ROLE.ADMIN);
-
         return user;
     }
 

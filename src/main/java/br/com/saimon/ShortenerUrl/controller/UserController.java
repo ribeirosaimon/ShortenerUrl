@@ -5,9 +5,9 @@ import br.com.saimon.ShortenerUrl.domain.User;
 import br.com.saimon.ShortenerUrl.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -19,6 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
     }
@@ -30,6 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/role/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> addRole(@PathVariable String id) {
         return ResponseEntity.ok(userService.addRole(id));
     }
