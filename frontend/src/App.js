@@ -1,11 +1,12 @@
 import React from "react";
-
+import "bootstrap/dist/css/bootstrap.min.css"
+import Register from "./template/register/Register";
 
 function App() {
   return (
-   <div>
-    TESTE
-   </div>
+   <main >
+      <Register/>
+   </main>
   );
 }
 
