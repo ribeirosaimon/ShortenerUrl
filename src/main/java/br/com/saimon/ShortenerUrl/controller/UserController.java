@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -24,13 +24,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getUsers());
     }
 
-    @PostMapping("/save")
+
+    @PostMapping("/signin")
     public ResponseEntity<User> saveUser(@RequestBody NewUserDto user) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/signin").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
-    @PostMapping("/role/{id}")
+    @PostMapping("user/role/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> addRole(@PathVariable String id) {
         return ResponseEntity.ok(userService.addRole(id));

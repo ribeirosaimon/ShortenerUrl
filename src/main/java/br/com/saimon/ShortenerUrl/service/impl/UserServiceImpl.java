@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User saveUser(NewUserDto user) {
         String encriptedPassword = passwordEncoder.encode(user.getPassword());
         User newUser = User.builder()
-                .name(user.getName())
                 .username(user.getUsername())
                 .password(encriptedPassword)
                 .roles(Arrays.asList(User.ROLE.USER))

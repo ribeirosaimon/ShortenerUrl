@@ -1,7 +1,10 @@
 import { useRef, useState, useEffect } from "react";
+import axios from "../../api/axios"
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = "/user/save"
 
 const Register = () => {
     const userRef = useRef();
@@ -44,9 +47,13 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        setSuccess(true)
-        console.log(user, pwd)
+        await axios.post(REGISTER_URL,
+            JSON.stringify({username:user, password:pwd}),
+            {
+                headers:{"content-Type" : "application/json"},
+                withCredentials:true
+            })
+            setSuccess(true)
     }
 
     return (
