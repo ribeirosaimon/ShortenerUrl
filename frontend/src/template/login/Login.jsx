@@ -25,8 +25,8 @@ const Login = () => {
   }, [user, pwd]);
 
   const body = {
-    password: user,
-    username: pwd,
+    password: pwd,
+    username: user,
   };
 
   const options = {
