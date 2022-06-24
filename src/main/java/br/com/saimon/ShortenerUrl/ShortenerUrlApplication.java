@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -30,8 +31,8 @@ public class ShortenerUrlApplication {
 	public void createAdminUser(){
 		String encriptedPassword = this.passwordEncoder().encode("pass");
 		User adminUser = User.builder()
-				.name("adminUser")
-				.username("adminUser")
+				.name("adminuser")
+				.username("adminuser")
 				.password(encriptedPassword)
 				.roles(Arrays.asList(User.ROLE.ADMIN))
 				.createdAt(new Date())
